@@ -4,7 +4,9 @@
 DSS 工作流支持两种工作流节点的新增方式：
 
 - Scriptis 脚本类型的工作流节点；
-- 第三方 AppConn 的工作流节点。
+- 第三方 AppConn 的工作流节点；
+- `bml2linkis` 类型工作流节点（什么是 [BML2Linkis工作流节点类型](BML2Linkis工作流节点类型开发指南.md)？）；
+- `appconn2linkis` 类型工作流节点（什么是 [AppConn2Linkis工作流节点类型](AppConn2Linkis工作流节点类型开发指南.md)？）。
 
 请先确认您想要新增的工作流节点类型。
 
