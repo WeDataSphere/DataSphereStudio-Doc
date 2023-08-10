@@ -149,7 +149,7 @@ insert into `dss_workflow_node_ui_to_validate`(`ui_id`,`validate_id`) values (@w
 - `appconn_name`，所关联的 AppConn 的 name
 - `node_type`，工作流节点类型，必须以 linkis.[appconn/engineconn]开头，具体请参考下面的详细介绍。
 - `support_jump`，是否支持跳转URL，即工作流节点是否支持Iframe嵌入
-- `jump_type`，跳转类型：1 表示是外部节点，2 表示是 Scriptis 节点。如果 supportJump 为 false，则该字段无意义。
+- `jump_type`，跳转类型：0 表示不跳转，1 表示是外部第三方节点，2 表示是 Scriptis 节点, 3 表示 DSS 的前端路由路径节点。如果 supportJump 为 false，则该字段无意义。
 - `submit_to_scheduler`，【保留字段】表示是否可以发布给调度系统，1 为可以发布
 - `enable_copy`，节点是否支持拷贝，1 为支持拷贝
 - `should_creation_before_node`，该工作流节点在拖拽到工作流画布前，是否需要先弹窗创建，1 为需要先弹窗创建
