@@ -25,7 +25,7 @@ AppConn2Linkis 与 BML2Linkis 相比，唯一不同的地方在于，BML2Linkis 
 
 BML2Linkis 要求保存时必须先调用 Linkis 的 `将脚本保存到BML` 接口，将生成的代码保存到 BML。
 
-而 AppConn2Linkis 没有这个要求，用户只需将界面的关键信息通过前端 Iframe 通信传递给 DSS 工作流即可，具体流程如下：
+而 AppConn2Linkis 没有这个要求，用户只需将界面的 **关键信息** 通过前端 Iframe 通信传递给 DSS 工作流即可，具体流程如下：
 
 - 用户拖出&创建新的 AppConn2Linkis 工作流节点 
 - 用户双击打开该工作流节点 
@@ -44,7 +44,9 @@ BML2Linkis 要求保存时必须先调用 Linkis 的 `将脚本保存到BML` 接
 
 以上流程的(1)、(2)、(3)三个步骤请参考 [BML2Linkis 工作流节点类型开发指南](BML2Linkis工作流节点类型开发指南.md) ，这里不再重复介绍。
 
-以下重点介绍：(4)执行该工作流节点时，DSS `nodeexecution` 模块请求该 AppConn 的 `AppConn2LinkisRefExecutionOperation`，通过**关键信息**获取 `AppConn2LinkisResponseRef`
+以下重点介绍：
+
+### (4) 执行该工作流节点时，DSS `nodeexecution` 模块请求该 AppConn 的 `AppConn2LinkisRefExecutionOperation`，通过 _关键信息_ 获取 `AppConn2LinkisResponseRef`
 
 `AppConn2LinkisRefExecutionOperation` 的目的，是返回一段可被 Linkis 某个引擎执行的代码，其返回对象为 `AppConn2LinkisResponseRef`。
 
