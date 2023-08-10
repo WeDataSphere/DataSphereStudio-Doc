@@ -17,7 +17,7 @@ AppConn2Linkis 与 BML2Linkis 相比，唯一不同的地方在于，BML2Linkis 
 
 ## 二、如何实现一个 AppConn2Linkis 工作流节点 
 
-请注意，完成 [第三方系统接入DSS开发指南](第三方系统接入DSS开发指南.md) 是本步骤开始的前提。
+**请注意，完成 [第三方系统接入DSS开发指南](第三方系统接入DSS开发指南.md) 是本步骤开始的前提。**
 
 您需先熟读并完成 [DSS工作流如何新增工作流节点](DSS工作流如何新增工作流节点.md) 要求的步骤之后，再按本步骤完成相关的开发。
 
@@ -27,15 +27,20 @@ BML2Linkis 要求保存时必须先调用 Linkis 的 `将脚本保存到BML` 接
 
 而 AppConn2Linkis 没有这个要求，用户只需将界面的关键信息通过前端 Iframe 通信传递给 DSS 工作流即可，具体流程如下：
 
-用户拖出&创建新的 AppConn2Linkis 工作流节点 -> 用户双击打开该工作流节点 -> DSS 前端调用 `getAppConnNodeUrl` 接口获取该工作流节点的 URL
--> **(1)DSS 后台 调用该 AppConn 的 `RefQueryJumpUrlOperation` 获取 `jumpURL`** -> **(2)DSS 前端通过 Iframe 打开 `jumpURL`** ->
-用户在该节点的 UI 界面编辑内容 -> **(3)用户点击保存时，通过前端 Iframe 通信将该界面的**关键信息**传递给 DSS 工作流** -> DSS 工作流将 Iframe 返回的**关键信息**写入 DSS 工作流
--> (4)执行该工作流节点时，DSS `nodeexecution` 模块请求该 AppConn 的 `AppConn2LinkisRefExecutionOperation`，通过**关键信息**获取 `AppConn2LinkisResponseRef` ->
-`nodeexecution` 模块通过 `AppConn2LinkisResponseRef` 返回的 `code`、`engineType` 和 `runType` 等信息将代码提交给 Linkis 进行执行。
+- 用户拖出&创建新的 AppConn2Linkis 工作流节点 
+- 用户双击打开该工作流节点 
+- DSS 前端调用 `getAppConnNodeUrl` 接口获取该工作流节点的 URL
+- **(1)DSS 后台 调用该 AppConn 的 `RefQueryJumpUrlOperation` 获取 `jumpURL`** 
+- **(2)DSS 前端通过 Iframe 打开 `jumpURL`** 
+- 用户在该节点的 UI 界面编辑内容 
+- **(3)用户点击保存时，通过前端 Iframe 通信将该界面的 **关键信息** 传递给 DSS 工作流** 
+- DSS 工作流将 Iframe 返回的 **关键信息** 写入 DSS 工作流
+- **(4)执行该工作流节点时，DSS `nodeexecution` 模块请求该 AppConn 的 `AppConn2LinkisRefExecutionOperation`，通过 _关键信息_ 获取 `AppConn2LinkisResponseRef`**
+- `nodeexecution` 模块通过 `AppConn2LinkisResponseRef` 返回的 `code`、`engineType` 和 `runType` 等信息将代码提交给 Linkis 进行执行。
 
-什么是**关键信息**？
+什么是 **关键信息**？
 
-是指通过该**关键信息**能生成可被 Linkis 某个引擎执行的代码的信息。
+是指通过该 **关键信息** 能生成可被 Linkis 某个引擎执行的代码的信息。
 
 以上流程的(1)、(2)、(3)三个步骤请参考 [BML2Linkis 工作流节点类型开发指南](BML2Linkis工作流节点类型开发指南.md) ，这里不再重复介绍。
 
@@ -76,4 +81,4 @@ public class TestAppConn2LinkisRefExecutionOperation extends AbstractDevelopment
 
 可以看到，该 AppConn2Linkis 工作流节点通过用户在界面输入库名和表名，协助用户通过生成对应的 HiveQL 语句删除对应的 Hive 表。
 
-这里的**关键信息**就是 `dbName` 和 `tableName`，是生成删表语句的关键信息。
+这里的 **关键信息** 就是 `dbName` 和 `tableName`，是生成删表语句的关键信息。
