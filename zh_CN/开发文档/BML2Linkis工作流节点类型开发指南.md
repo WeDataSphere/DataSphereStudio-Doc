@@ -31,12 +31,17 @@ BML2Linkis 是 AppConn 的一种特殊实现，之所以单独作为一种节点
 
 从用户在工作流 DAG 画布上拖出一个新的 BML2Linkis 工作流节点开始，整个前后台交互流程如下：
 
-用户拖出&创建新的 BML2Linkis 工作流节点 -> 用户双击打开该工作流节点 -> DSS 前端调用 `getAppConnNodeUrl` 接口获取该工作流节点的 URL
--> **(1)DSS 后台 调用该 AppConn 的 `RefQueryJumpUrlOperation` 获取 `jumpURL`** -> **(2)DSS 前端通过 Iframe 打开 `jumpURL`** ->
-用户在该节点的 UI 界面编辑内容 -> **(3)用户点击保存时，该节点的 UI 界面先生成代码，并通过调用 Linkis 的 `将脚本保存到BML` 接口，将代码保存到 BML** ->
-**(4)获取到 BML 返回的文件信息 `resourceId` 和 `version`，通过前端 Iframe 通信将 BML 文件信息传递给 DSS 工作流** -> DSS 工作流将 BML 文件信息写入 DSS 工作流
+- 用户拖出&创建新的 BML2Linkis 工作流节点 
+- 用户双击打开该工作流节点 
+- DSS 前端调用 `getAppConnNodeUrl` 接口获取该工作流节点的 URL
+- **(1)DSS 后台 调用该 AppConn 的 `RefQueryJumpUrlOperation` 获取 `jumpURL`** 
+- **(2)DSS 前端通过 Iframe 打开 `jumpURL`** 
+- 用户在该节点的 UI 界面编辑内容 
+- **(3)用户点击保存时，该节点的 UI 界面先生成代码，并通过调用 Linkis 的 `将脚本保存到BML` 接口，将代码保存到 BML** 
+- **(4)获取到 BML 返回的文件信息 `resourceId` 和 `version`，通过前端 Iframe 通信将 BML 文件信息传递给 DSS 工作流** 
+- DSS 工作流将 BML 文件信息写入 DSS 工作流
 
-#### (1) DSS 后台 调用该 AppConn 的 `RefQueryJumpUrlOperation` 获取 `jumpURL`
+### (1) DSS 后台 调用该 AppConn 的 `RefQueryJumpUrlOperation` 获取 `jumpURL`
 
 此步骤为后台实现，要求通过实现 AppConn 的 `RefQueryJumpUrlOperation` 接口，返回一个包含了 `jumpURL` 的 `QueryJumpUrlResponseRef`。
 
@@ -77,7 +82,7 @@ public class TestRefQueryJumpUrlOperation extends AbstractDevelopmentOperation<O
 }
 ```
 
-#### (2) DSS 前端通过 Iframe 打开 `jumpURL`
+### (2) DSS 前端通过 Iframe 打开 `jumpURL`
 
 DSS 前端通过 Iframe 打开该 `jumpURL`，这时该第三方页面开始渲染 UI ，涉及两种场景，具体如下：
 - 用户新建工作流节点，此时 `jumpURL` 的 `resourceId` 和 `version` 为空，这时只需渲染出该第三方页面的初始页面即可。
@@ -86,7 +91,7 @@ DSS 前端通过 Iframe 打开该 `jumpURL`，这时该第三方页面开始渲�
 
 其中，`fileName` 的命名格式为：`${resourceId}.${engineType}.${runType}`。
 
-#### (3) 用户点击保存时，该节点的 UI 界面先生成代码，并通过调用 Linkis 的 `将脚本保存到BML` 接口，将代码保存到 BML
+### (3) 用户点击保存时，该节点的 UI 界面先生成代码，并通过调用 Linkis 的 `将脚本保存到BML` 接口，将代码保存到 BML
 
 可调用 Linkis `PublicService` 服务的接口，生成 `resourceId` 和 `version`，或更新代码的版本，具体为如下两个接口：
 
@@ -95,7 +100,7 @@ DSS 前端通过 Iframe 打开该 `jumpURL`，这时该第三方页面开始渲�
 
 如果您的 BML2Linkis 节点所对应的第三方页面没有后台，可直接调如上的 `将脚本保存到BML` 接口，将生成的脚本直接保存到 BML。
 
-#### (4) 获取到 BML 返回的文件信息 `resourceId` 和 `version`，通过前端 Iframe 通信将 BML 文件信息传递给 DSS 工作流
+### (4) 获取到 BML 返回的文件信息 `resourceId` 和 `version`，通过前端 Iframe 通信将 BML 文件信息传递给 DSS 工作流
 
 首先，我们需熟悉第三方系统的前端如何对接 DSS 工作流节点的前端。[点我参考第三方系统前端对接DSS前端](https://github.com/WeBankFinTech/DataSphereStudio-Doc/blob/main/zh_CN/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/DSS%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%A6%82%E4%BD%95%E6%96%B0%E5%A2%9E%E5%B7%A5%E4%BD%9C%E6%B5%81%E8%8A%82%E7%82%B9.md#12-%E7%AC%AC%E4%B8%89%E6%96%B9%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%89%B9%E6%AE%8A%E5%AF%B9%E6%8E%A5)
 
@@ -124,4 +129,4 @@ BML2Linkis 都是 `先打开，后创建` 这种类型。因此要求 BML2Linkis
 
 如上所示，我们要求 `jobContent` 的内容必须包含如下三个字段：
 - `resourceId` 和 `version` ，是 BML 文件的 `resourceId` 和 `version`。要求该 UI 界面生成的代码需保存到 Linkis 的 BML 之中。
-- `fileName`，命名格式为：${resourceId}.${engineType}.${runType}。
+- `fileName`，命名格式为：`${resourceId}.${engineType}.${runType}`。
