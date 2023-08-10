@@ -158,10 +158,10 @@ insert into `dss_workflow_node_ui_to_validate`(`ui_id`,`validate_id`) values (@w
 接下来详细介绍一下 `node_type` 字段的规范。
 
 `node_type` 主要分为四种类型，具体如下：
-- 如果节点类型是 Linkis 引擎节点，则 `node_type` 的值必须为：linkis.${engineType}.${runType}。比如 SparkSQL 的 `node_type` 必须是：linkis.spark.sql；
-- 如果节点类型是外部第三方 AppConn，则 `node_type` 的值必须为：linkis.appconn.${appConnName}.${appConnType}。比如 Visualis 的 widget，则 `node_type` 必须是：linkis.appconn.visualis.widget；
-- 如果节点类型是 bml2linkis 类型（什么是 [BML2Linkis工作流节点类型](BML2Linkis工作流节点类型开发指南.md)？），则 `node_type` 的值必须为：linkis.appconn.${appConnName}.bml2linkis。比如 SparkETL 的 `node_type` 为：linkis.appconn.sparketl.bml2linkis。
-- 如果节点类型是 appconn2linkis 类型（什么是 [AppConn2Linkis工作流节点类型](AppConn2Linkis工作流节点类型开发指南.md)？），则 `node_type` 的值必须为：linkis.appconn.${appConnName}.appconn2linkis。
+- 如果节点类型是 Linkis 引擎节点，则 `node_type` 的值必须为：`linkis.${engineType}.${runType}`。比如 SparkSQL 的 `node_type` 必须是：linkis.spark.sql；
+- 如果节点类型是外部第三方 AppConn，则 `node_type` 的值必须为：`linkis.appconn.${appConnName}.${appConnType}`。比如 Visualis 的 widget，则 `node_type` 必须是：`linkis.appconn.visualis.widget`；
+- 如果节点类型是 `bml2linkis` 类型（什么是 [BML2Linkis工作流节点类型](BML2Linkis工作流节点类型开发指南.md)？），则 `node_type` 的值必须为：`linkis.appconn.${appConnName}.bml2linkis`。比如 Spark 引擎的 SparkETL 的 `node_type` 为：`linkis.appconn.sparketl.bml2linkis`。
+- 如果节点类型是 `appconn2linkis` 类型（什么是 [AppConn2Linkis工作流节点类型](AppConn2Linkis工作流节点类型开发指南.md)？），则 `node_type` 的值必须为：`linkis.appconn.${appConnName}.appconn2linkis`。
 
 #### 2.2.2 将工作流节点绑定到一个分类
 
